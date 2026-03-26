@@ -33,7 +33,8 @@ export default function ChiSquareCalculator() {
         { name: 'Purple Wrinkled', expected: 0, observed: 0 },
         { name: 'White Plump', expected: 0, observed: 0 },
         { name: 'White Wrinkled', expected: 0, observed: 0 }
-      ]
+      ],
+      sampleData: [79, 22, 24, 10]
     },
     {
       id: 'mitosis',
@@ -47,7 +48,8 @@ export default function ChiSquareCalculator() {
         { name: 'Metaphase', expected: 0, observed: 0 },
         { name: 'Anaphase', expected: 0, observed: 0 },
         { name: 'Telophase', expected: 0, observed: 0 }
-      ]
+      ],
+      sampleData: [84, 55, 32, 29]
     },
     {
       id: 'interphase',
@@ -61,7 +63,8 @@ export default function ChiSquareCalculator() {
         { name: 'Prophase', expected: 0, observed: 0 },
         { name: 'Metaphase', expected: 0, observed: 0 },
         { name: 'Ana/Telophase', expected: 0, observed: 0 }
-      ]
+      ],
+      sampleData: [136, 52, 8, 4]
     },
     {
       id: 'peas',
@@ -73,7 +76,8 @@ export default function ChiSquareCalculator() {
       categories: [
         { name: 'Tall (Dominant)', expected: 0, observed: 0 },
         { name: 'Short (Recessive)', expected: 0, observed: 0 }
-      ]
+      ],
+      sampleData: [73, 27]
     },
     {
       id: 'blood',
@@ -87,7 +91,8 @@ export default function ChiSquareCalculator() {
         { name: 'Type A', expected: 0, observed: 0 },
         { name: 'Type B', expected: 0, observed: 0 },
         { name: 'Type AB', expected: 0, observed: 0 }
-      ]
+      ],
+      sampleData: [92, 78, 20, 10]
     }
   ];
 
@@ -565,7 +570,25 @@ export default function ChiSquareCalculator() {
 
                     {/* Data Entry */}
                     <div className="bg-white rounded-xl shadow-lg p-8">
-                      <h3 className="text-xl font-bold text-gray-800 mb-6">Enter Your Data</h3>
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Enter Your Data</h3>
+                      {selectedScenario.sampleData && !customMode && (
+                        <p className="text-gray-600 text-sm mb-6">
+                          Enter your observed counts for each category.
+                          <button
+                            onClick={() => {
+                              const newCategories = categories.map((cat, idx) => ({
+                                ...cat,
+                                observed: selectedScenario.sampleData[idx]
+                              }));
+                              setCategories(newCategories);
+                              setShowResults(false);
+                            }}
+                            className="ml-2 text-emerald-600 hover:text-emerald-800 underline font-semibold"
+                          >
+                            Load sample data
+                          </button>
+                        </p>
+                      )}
 
                       <div className="space-y-4">
                         {categories.map((cat, idx) => (
